@@ -1,7 +1,18 @@
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
+import { Signup } from "./Components/Userauth/Signup";
+import { Signin } from "./Components/Userauth/Signin";
+
+
 export default function App() {
-  return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+  return (<Router>
+<Routes>
+  <Route path="/" element={<Signin/>} />
+  <Route path="/signup" element={<Signup/>} />
+</Routes>
+    </Router>
   )
 }
