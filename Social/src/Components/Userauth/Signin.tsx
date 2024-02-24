@@ -1,13 +1,30 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export const Signin = () =>{
     const [username ,setUsername] =useState<string>()
     const [password,setPassword] = useState<string>()
+    const navigate = useNavigate()
 
     const onclick = async()=>{
         if(!username || !password) return
          const data = {username,password};
-         console.log(data)
+
+         const response = await fetch("http://localhost:8000/api/signin/",{
+          method:"POST",
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(data),
+            cache: 'default'
+      })
+  
+     const newdata = await response.json()
+     if(newdata.token){
+      localStorage.setItem("token", newdata.token);
+      navigate("/home")
+     }
     }
 
     return <div className="flex justify-center mt-56">
