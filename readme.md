@@ -72,10 +72,9 @@ To run this project locally, follow these steps:
      npm start
      ```
 
-4. Access the application at `http://localhost:3000` in your web browser.
+4. Access the application at  `http://localhost:5173/` in your web browser.
 
 ### Contribution Guidelines
 
 Contributions to this project are welcome! If you find any bugs or have suggestions for new features, feel free to open an issue or submit a pull request.
 
-s
