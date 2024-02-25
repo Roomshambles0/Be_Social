@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { ProfileCard } from "./Profilecard"
-import { Profilegrid } from "./Navbar"
+import { Navbar } from "./Navbar"
 import { PostCard } from "./Postcard";
 import { Commentscard } from "./commentcard";
 import { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ export const PostCommPage = ()=>{
 
 
     return <div className="grid grid-cols-12">
-    <div className="col-span-3"><Profilegrid /></div> 
+    <div className="col-span-3"><Navbar /></div> 
     <div className="col-span-5"><CommentsGrid id={id}/></div>
     <div className="col-span-3"><ProfileCard /></div>
        </div>

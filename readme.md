@@ -62,14 +62,14 @@ To run this project locally, follow these steps:
    - Navigate to the frontend directory and install dependencies:
 
      ```bash
-     cd frontend
+     cd Social
      npm install
      ```
 
    - Start the React development server:
 
      ```bash
-     npm start
+     npm run dev
      ```
 
 4. Access the application at  `http://localhost:5173/` in your web browser.

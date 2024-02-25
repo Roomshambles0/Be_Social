@@ -1,4 +1,4 @@
-import { CalendarCheck, Home, NotebookIcon, Plus} from "lucide-react"
+import { Home, NotebookIcon, Plus} from "lucide-react"
 import { useState } from "react"
 import Modal from "../modal/modal"
 import { Draftmodal } from "../modal/Draftmodal"

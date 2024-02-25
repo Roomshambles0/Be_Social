@@ -82,12 +82,14 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+
+#Add your infomation here
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'social',
         'USER': 'postgres',
-        'PASSWORD': '1234',
+        'PASSWORD': '****',
         'HOST': 'localhost',  # Or your database host
         'PORT': '5432',       # Or your database port
     }
