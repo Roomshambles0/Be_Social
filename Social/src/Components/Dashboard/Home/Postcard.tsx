@@ -1,6 +1,6 @@
 import { Heart, MessageCircle, Share } from "lucide-react"
 import Modal from "../modal/modal"
-import { useState } from "react"
+import { useLayoutEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 
@@ -10,10 +10,13 @@ const [open, setOpen] = useState(false)
 const [title, setTitle] = useState<string>()
 const [description,setDescription] = useState<string>()
 
-const [like, setLike] = useState(false);
-
-
+const [like, setLike] = useState<boolean>(params.liked);
+const [likenums,setLikenums] = useState<number>(params.like)
 const navigate = useNavigate()
+
+console.log(params.like,params.liked)
+
+
 
 const comment =async ()=>{
     if(!title || !description) return
@@ -40,10 +43,11 @@ const comment =async ()=>{
 }
 
 const onlike = async()=>{
-    setLike(prevstate => !prevstate)
-    const data = {like:like,id:params.id};
+  if(like) return 
+    const thislike  = true
+    setLike(true)
     const token = localStorage.getItem('token')
-    const body = {token:token,data}
+    const body = {token:token,like:thislike,id:params.id}
     const response = await fetch("http://localhost:8000/api/like/",{
      method:"POST",
      headers: {
@@ -56,6 +60,7 @@ const onlike = async()=>{
 
 const newdata = await response.json()
 if(newdata.message =="Like saved to database"){
+setLikenums( prevstate => prevstate + 1)
 console.log("commented");
 }
 }
@@ -76,9 +81,8 @@ console.log("commented");
    
     <div className="flex mx-5 mt-4 mb-2 justify-around items-center">
         <div className="flex hover:bg-slate-400 hover:text-white py-2 px-5 rounded-lg" onClick={onlike}><Heart className={`pr-1
-         ${ like ? "text-red-700":"text-black"}`}/>{params.like}</div>
+         ${ (like || params.liked) ? "text-red-700":"text-black"}`}/>{likenums || params.like}</div>
         <div className="flex hover:bg-slate-400 hover:text-white py-2 px-5 rounded-lg" onClick={()=>{setOpen(true)}}> <MessageCircle className="pr-1"/>{params.comments}</div>
-        <div className="flex hover:bg-slate-400 hover:text-white py-2 px-5 rounded-lg"><Share className="pr-1"/></div>
     </div>
 
     </div>

@@ -34,7 +34,7 @@ fetchdata()
 
     return <div className="border-l-2 border-r-2 border-stone-300">
      {posts.map((post:any)=>{
-        return <PostCard id={post.pk} name={post.fields.author_name} title={post.fields.title} description={post.fields.description} like={post.fields.likes} comments={post.fields.comments} />
+        return <PostCard id={post.pk} name={post.fields.author_name} title={post.fields.title} description={post.fields.description} like={post.fields.likes} liked={post.fields.liked} comments={post.fields.comments} />
      })}   
     </div>
 }

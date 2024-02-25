@@ -32,4 +32,12 @@ class Comment(models.Model):
 
 
 
+class UserPostInteraction(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    liked = models.BooleanField(default=False)
+    interacted_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together = ['user', 'post']
+    

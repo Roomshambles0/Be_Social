@@ -3,7 +3,7 @@ import json
 # Create your views here.
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import User,Post,Comment,Likenumber
+from .models import User,Post,Comment,UserPostInteraction
 from django.core.serializers import serialize
 
 import jwt
@@ -85,19 +85,13 @@ def Allposts(request):
     user = User.objects.get(username=name)
     if exists:
          posts = Post.objects.filter(is_draft=False,is_published=True)
-         print(posts)
+         #print(posts)
          post_json_data = serialize('json', posts)
          post_data = json.loads(post_json_data)
-         print(post_data)
-         
-         likes = Likenumber.objects.filter(usr=user.id)
-         serialized=serialize('json', likes) 
-         postlikes = json.loads(serialized)
-         likedposts = map(maplikes,postlikes,post_json_data)
-         likedlist = list(likedposts)
-         print(likedlist)
-         
-         return Response({"posts":post_data,"name":name,"liked":likedlist},status=200)
+         print("post data is: ",post_data)
+         newdata = addliked(post_data,user)
+         print(newdata)
+         return Response({"posts":post_data,"name":name},status=200)
     
     print(data)
     return Response({'message':"Username is not present"},status=400)
@@ -122,14 +116,17 @@ def Comments(request):
          post_data = json.loads(post_json_data)
          print(post_data)
          post = Post.objects.get(id=id)
-         
+         user = User.objects.get(username=name)
+         likecheack = UserPostInteraction.objects.filter(user=user,post=post,liked=True).exists()
          send = {
              "title":post.title,
              "description":post.description,
-             "likes":post.likes,
+             "likenumber":post.likes,
              "comments":post.comments,
-             "auther":post.author_name
+             "auther":post.author_name,
+             "islike": likecheack
          }
+         print(send)
         
          return Response({"comments":post_data,"post":send},status=200)
     
@@ -221,38 +218,29 @@ def likes(request):
     
     name = decode["username"]
     exists = User.objects.filter(username=name).exists()
+    print(data)
     if exists:
-        body = data["data"]
-        present = Post.objects.filter(id=body["id"]).exists()
+        id = data["id"]
+        present = Post.objects.filter(id=id).exists()
         if not present:
              return Response({'message':"post not present"})
          
-        post = Post.objects.get(pk=body["id"])
-        usr = User.objects.get(username=name)
-        print(post,usr)
-        if(body["like"]):
-            liken = post.likes + 1
-            post.likes = liken
-            
-            likenumber_instance = Likenumber(
-            liked=True, 
-            not_intr=False, 
-            post=post, 
-            usr=usr  
-            )
-           
-            likenumber_instance.save()
-            post.save()
-        else:
-            liken = post.likes - 1
-            post.likes = liken
-            like = Likenumber.objects.get(post=post,usr=usr)  
-            like.delete()
-            post.save()
-        
-    
-        
-        return Response({"message":"Like saved to database"},status=200)
+        post = Post.objects.get(pk=id)
+        user = User.objects.get(username=name)
+        print(post,user)
+        like = data["like"]
+        if(like):
+            try:
+                interaction = UserPostInteraction.objects.get(user=user, post=post)
+                
+            except:
+                print("like")
+                interaction = UserPostInteraction(user=user, post=post, liked=True)
+                liken = post.likes + 1
+                post.likes = liken
+                interaction.save()
+                post.save()
+            return Response({"message":"Like saved to database"},status=200)
     
     print(data)
     return Response({'message':"Username is not present"},status=400)
@@ -288,7 +276,16 @@ def PostDraft(request):
 
 
 
-def maplikes(like,post):
-       if(like.field.post == post.pk):
-           return True
      
+def addliked(postdata,usr):
+    
+    for i in postdata:
+        post = Post.objects.get(id=i["pk"])
+        likecheack = UserPostInteraction.objects.filter(user=usr,post=post,liked=True).exists()
+        if likecheack:  
+           i["fields"]["liked"] = True
+        else:
+            i["fields"]["liked"] = False
+    return postdata
+    
+    

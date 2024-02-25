@@ -6,7 +6,7 @@ import { Drafts } from "./Drafts"
 import { useNavigate, useParams } from "react-router-dom"
 
 
-export const Profilegrid =()=>{
+export const Navbar =()=>{
 const [open, setOpen] = useState(false);
 const [title, setTitle] = useState<string>();
 const [description,setDescription] = useState<string>();
@@ -69,7 +69,6 @@ const ondraft = async()=>{
     }
   }}> <Home className="pr-1"/> <button>Home</button></div>
   <div className="flex items-center hover:shadow-2xl hover:shadow-sky-800 drop-shadow-2xl hover:text-white hover:bg-sky-400 rounded-full text-center font-bold px-8 p-4 text-2xl my-4" onClick={()=>{setDraft(true)}}> <NotebookIcon className="pr-1"/> <button >Drafted</button></div>
-  <div className="flex items-center hover:shadow-2xl hover:shadow-sky-800 drop-shadow-2xl hover:text-white hover:bg-sky-400 rounded-full text-center font-bold px-8 p-4 text-2xl my-4"> <CalendarCheck className="pr-1"/> <button >Scheduled</button></div>
 
  
   <div className="flex items-center  hover:shadow-2xl hover:shadow-sky-800 drop-shadow-2xl hover:text-white hover:bg-sky-400  text-white bg-sky-800 rounded-full text-center justify-center font-bold pr-8 p-4 text-2xl my-4 " onClick={()=>{setOpen(true)}}> <Plus className="pr-1"/> <button className="p" >Post</button></div>
@@ -93,7 +92,6 @@ const ondraft = async()=>{
         </div>
         <div className="flex justify-around">
         <div className="flex items-center hover:bg-slate-700 text-white bg-slate-600 rounded-full text-center justify-center font-bold px-8 p-4 text-xl my-4 mt-4" onClick={ondraft}>Draft</div>
-        <div className="flex items-center hover:bg-slate-700 text-white bg-slate-600 rounded-full text-center justify-center font-bold px-8 p-4 text-xl my-4 mt-4" >Schedule</div>
         <div className="flex items-center hover:bg-sky-400 text-white bg-sky-800 rounded-full text-center justify-center font-bold px-8 p-4 text-xl my-4 mt-4 ml-6" onClick={submitpost}>Submit</div>
         </div>
     </Modal>
