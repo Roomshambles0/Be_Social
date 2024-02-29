@@ -2,6 +2,8 @@
 
 Welcome to the Mini Social Media Application! This project combines the power of Django REST Framework for the backend, React for the frontend, and PostgreSQL for the database. It allows users to post mini blogs, interact with other users' posts by liking and commenting on them, and much more.
 
+## [demo](https://drive.google.com/file/d/1zgR7OvLKZMF4e3_cKtYzCNsIpmTIbCY7/view?usp=sharing)
+
 ### Features
 
 1. **User Authentication**: Users can sign up, log in, and log out securely. JWT (JSON Web Tokens) may be used for authentication.
